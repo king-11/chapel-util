@@ -1,0 +1,631 @@
+.. default-domain:: chpl
+
+.. module:: Socket
+   :synopsis: Socket Module library, specifically related to IP Sockets.
+
+Socket
+======
+**Usage**
+
+.. code-block:: chapel
+
+   use Socket;
+
+
+or
+
+.. code-block:: chapel
+
+   import Socket;
+
+
+Socket Module library, specifically related to IP Sockets.
+
+The Socket module focuses on connecting, accepting sockets and providing interface for
+communication between the sockets. Also provided are some constant values representing
+common idioms in socket programming, such as standard Addresses, Families and Flags.
+For more constants that can used alongside refer :mod:`Sys`.
+
+To those familiar with the Unix socket API, the method names will feel familiar,
+though their usage will be somewhat simpler than the raw Unix socket API.
+
+Records
+-----------------
+:type:`ipAddr`
+:type:`tcpConn`
+:type:`tcpListener`
+:type:`udpSocket`
+
+Enum
+-----------------
+:type:`IPFamily`
+
+Procedures
+-----------------
+:proc:`bind`
+:proc:`connect`
+:proc:`delayAck`
+:proc:`getpeername`
+:proc:`getSocketOpt`
+:proc:`getsockname`
+:proc:`listen`
+:proc:`naggle`
+:proc:`setSockOpt`
+
+Records, Types and Function Definitions
+---------------------------------------
+
+.. enum:: enum IPFamily { IPv4 = 2, IPv6 = 10, IPUnspec = 0 }
+
+   
+   Available values for different Internet
+   Protocol Families to be used when creating Sockets.
+   
+
+
+.. type:: type ipv4Addr = sys_in_addr_t
+
+.. data:: const IPv4Localhost: ipv4Addr = INADDR_LOOPBACK
+
+.. data:: const IPv4Any: ipv4Addr = INADDR_ANY
+
+.. data:: const IPv4Broadcast: ipv4Addr = INADDR_BROADCAST
+
+.. type:: type ipv6Addr = sys_in6_addr_t
+
+.. data:: const IPv6Localhost: ipv6Addr = in6addr_loopback
+
+.. data:: const IPv6Any: ipv6Addr = in6addr_any
+
+.. record:: ipAddr
+
+   
+   Abstract supertype for network addresses. Contains data
+   about :type:`IPFamily`, `host` and `port`.
+   
+
+
+.. method:: proc type ipAddr.create(host: string = "127.0.0.1", port: uint(16) = 8000, family: IPFamily = IPFamily.IPv4) throws
+
+   
+   Returns a new record of type :type:`ipAddr` prvoided `host`, `port`
+   and `family`. this function is equivalent to the following code:
+   .. code-block:: Chapel
+     ipAddr.create("127.0.0.1", 8111, IPFamily.IPv4)
+   
+   :arg host: address string in dot-dash or colon notation depending on family.
+   :type host: `string`
+   :arg port: network address's port.
+   :type port: `uint(16)`
+   :arg family: value of IP Family
+   :type family: :type:`IPFamily`
+   :return: address instance.
+   :rtype: `ipAddr`
+   :throws SystemError: Upon incompatible `host`, `port` or `family`
+   
+
+.. method:: proc type ipAddr.ipv4(host: ipv4Addr, port: uint(16) = 8000) throws
+
+   
+   Returns a new record of type `ipAddr` prvoided `host` and `port`.
+   The family type is assumed based on `host` which is a standard address.
+   this function is equivalent to the following code:
+   .. code-block:: Chapel
+     ipAddr.ipv4(IPv4LocalHost, 8111)
+   
+   :arg host: standard ipv4 address.
+   :type host: `ipv4Addr`
+   :arg port: network address's port.
+   :type port: `uint(16)`
+   :return: address instance.
+   :rtype: `ipAddr`
+   :throws SystemError: Upon incompatible `host`, `port` or `family`
+   
+
+.. method:: proc type ipAddr.ipv6(host: ipv6Addr, port: uint(16) = 8000) throws
+
+   
+   Returns a new record of type `ipAddr` prvoided `host` and `port`.
+   The family type is assumed based on `host` which is a standard address.
+   this function is equivalent to the following code:
+   .. code-block:: Chapel
+     ipAddr.ipv6(IPv6LocalHost, 8111)
+   
+   :arg host: standard ipv6 address.
+   :type host: `ipv6Addr`
+   :arg port: network address's port.
+   :type port: `uint(16)`
+   :return: address instance.
+   :rtype: `ipAddr`
+   :throws SystemError: Upon incompatible `host`, `port` or `family`
+   
+
+.. method:: proc ipAddr.family
+
+   
+   Returns the family type of address.
+   :return: family type of address
+   :rtype: :type:`IPFamily`
+   
+
+.. method:: proc ipAddr.host
+
+   
+   Returns the host address.
+   :return: host address
+   :rtype: `string`
+   
+
+.. method:: proc ipAddr.port
+
+   
+   Returns the `port` stored in record.
+   :return: Returns numeric port.
+   :rtype: `uint(16)`
+   
+
+.. function:: proc !=(in lhs: ipAddr, in rhs: ipAddr)
+
+.. method:: proc ipAddr.writeThis(f) throws
+
+.. type:: type tcpConn = file
+
+.. method:: proc tcpConn.socketFd throws
+
+   
+   Returns the file descriptor associated with socket
+   :return: Returns file descriptor.
+   :rtype: `int(32)`
+   
+
+.. method:: proc tcpConn.addr
+
+   
+   Returns the address of remote socket connection
+   :return: Returns remote address.
+   :rtype: `ipAddr`
+   
+
+.. function:: proc !=(in lhs: tcpConn, in rhs: tcpConn)
+
+.. method:: proc tcpConn.writeThis(f) throws
+
+.. record:: tcpListener
+
+   
+   A record holding reference to a tcp socket
+   bound and listening for connections.
+   
+
+
+   .. attribute:: var socketFd: int(32)
+
+.. method:: proc tcpListener.accept(in timeout: timeval = new timeval(-1, 0)) throws
+
+   
+   Waits for a new connection based on `timeout` and
+   returns a new :type:`tcpConn` if successful. Default
+   time to wait for a new connection is indefinite.
+   
+   :arg timeout: time to wait for new connection.
+   :type timeval: :type:`~Sys.timeval`
+   :return: accepted connection.
+   :rtype: `tcpConn`
+   :throws Error: Upon timeout completion without
+                  any new connection
+   
+
+.. method:: proc tcpListener.close()
+
+.. method:: proc tcpListener.addr
+
+   
+   Returns the address on which socket is
+   listening on and bound to.
+   
+   :return: bound address
+   :rtype: `ipAddr`
+   
+
+.. function:: proc !=(in lhs: tcpListener, in rhs: tcpListener)
+
+.. method:: proc tcpListener.writeThis(f) throws
+
+.. data:: const BACKLOG_DEFAULT = if SOMAXCONN <= 128 then SOMAXCONN else 128
+
+.. function:: proc listen(in address: ipAddr, reuseAddr = true, backlog: integral = BACKLOG_DEFAULT) throws
+
+   
+   Convenience procedure which creates a new :type:`tcpListener` bound
+   to and listening on `address` for new connections. `backlog`
+   determines how many connections can be pending (not having called
+   accept) before the socket will begin to reject them. The default
+   value of backlog is `BACKLOG_DEFAULT`.
+   
+   :arg address: address to connect to
+   :type address: :type:`ipAddr`
+   :arg timeout: standard ipv6 address.
+   :type timeval: :type:`~Sys.timeval`
+   :return: connected socket.
+   :rtype: `tcpConn`
+   :throws SystemError: On failure to bind or listen on `address`
+   
+
+.. function:: proc connect(in address: ipAddr, in timeout = new timeval(-1, 0)) throws
+
+   
+   Convenience procedure which creates a :type:`tcpConn` connected to
+   `address`.`timeout` determines how much time to wait for
+   connection to be established. The default value for `timeout` is
+   indefinite.
+   
+   :arg address: address to connect to
+   :type address: :type:`ipAddr`
+   :arg timeout: time to wait for connection establishment.
+   :type timeval: :type:`~Sys.timeval`
+   :return: connected socket.
+   :rtype: `tcpConn`
+   :throws SystemError: Upon failure to connect.
+   
+
+.. function:: proc connect(in host: string, in service: string, family: IPFamily = IPFamily.IPUnspec, in timeout = new timeval(-1, 0)): tcpConn throws
+
+   
+   This overload of `connect` not only returns a :type:`tcpConn`
+   but also does DNS resolution for the provided `host`.
+   The `timeout` is tired for all resolved addresses and the first
+   successful one is returned back.
+   
+   :arg host: host to connect to or resolve if not in standard ip notation
+   :type host: `string`
+   :arg service: service to connect to on resolved `host`
+   :type service: `string`
+   :arg family: type of socket family to connect to
+   :type family: :type:`IPFamily`
+   :arg timeout: time to wait for each possible connection.
+   :type timeval: :type:`~Sys.timeval`
+   :return: connected socket.
+   :rtype: `tcpConn`
+   :throws SystemError: Upon failure to resolve address or connect
+                        to any of the resolved address in given `timeout`.
+   
+
+.. function:: proc connect(in host: string, in port: uint(16), family: IPFamily = IPFamily.IPUnspec, in timeout = new timeval(-1, 0)) throws
+
+   
+   This overload of `connect` not only returns a :type:`tcpConn`
+   but also does DNS resolution for the provided `host`.
+   The `timeout` is tired for all resolved addresses and the first
+   successful one is returned back.
+   
+   :arg host: address of host to connect or resolve if not in ip notation
+   :type host: `string`
+   :arg port: port to connect to on `host`
+   :type port: `uint(16)`
+   :arg family: type of socket family to connect to
+   :type family: :type:`IPFamily`
+   :arg timeout: time to wait for each possible connection.
+   :type timeval: :type:`~Sys.timeval`
+   :return: connected socket.
+   :rtype: `tcpConn`
+   :throws SystemError: Upon failure to resolve address or connect
+                     to any of the resolved address in given `timeout`.
+   
+
+.. record:: udpSocket
+
+   
+   A record holding reference to a udp socket
+   bound to any available port.
+   
+
+
+   .. attribute:: var socketFd: int(32)
+
+   .. method:: proc init(family: IPFamily = IPFamily.IPv4)
+
+.. method:: proc udpSocket.addr
+
+.. method:: proc udpSocket.recvfrom(bufferLen: int, in timeout = new timeval(-1, 0), flags: c_int = 0) throws
+
+   
+   Reads incoming `bufferLen` number of bytes on socket, and
+   return a tuple of (data, address), where address will be a
+   :type:`ipAddr` pointing to address of the socket from where data was received.
+   
+   :arg bufferLen: number of bytes to read
+   :type bufferLen: `int`
+   :arg timeout: time to wait for data to arrive.
+   :type timeval: :type:`~Sys.timeval`
+   :return: tuple of (data, address)
+   :rtype: `tuple(:mod:`bytes <Bytes>`, :type:ipAddr)`
+   :throws SystemError: Upon failure to receive any data
+                     within given `timeout`.
+   
+
+.. method:: proc udpSocket.recv(bufferLen: int, in timeout = new timeval(-1, 0)) throws
+
+   
+   Reads incoming `bufferLen` number of bytes on socket, and
+   return a tuple of read bytes, which can have size smaller than asked and if
+   the size is more they will be truncated.
+   
+   :arg bufferLen: number of bytes to read
+   :type bufferLen: `int`
+   :arg timeout: time to wait for data to arrive.
+   :type timeval: :type:`~Sys.timeval`
+   :return: data
+   :rtype: :mod:`bytes <Bytes>`
+   :throws SystemError: Upon failure to receive any data
+                        within given `timeout`.
+   
+
+.. method:: proc udpSocket.send(data: bytes, in address: ipAddr, in timeout = new timeval(-1, 0)) throws
+
+   
+   Send `data` over socket to the provided address and
+   return number of bytes sent if successful.
+   
+   :arg data: data to send to address
+   :type data: :mod:`bytes <Bytes>`
+   :arg address: socket address for sending data
+   :type address: :type:`ipAddr`
+   :arg timeout: time to wait for data to arrive.
+   :type timeval: :type:`~Sys.timeval`
+   :return: data
+   :rtype: :mod:`bytes <Bytes>`
+   :throws SystemError: Upon failure to send any data
+                        within given `timeout`.
+   
+
+.. function:: proc !=(in lhs: udpSocket, in rhs: udpSocket)
+
+.. method:: proc udpSocket.writeThis(f) throws
+
+.. function:: proc setSockOpt(ref socket: tcpConn, level: c_int, optname: c_int, value: c_int) throws
+
+   
+   Set the value of the given socket option (see `setsockopt(2) </https://pubs.opengroup.org/onlinepubs/9699919799/functions/setsockopt.html#>`_)
+   on provided :type:`tcpConn`. The needed symbolic constants (SO_* etc.)
+   are defined in the :mod:`Sys`.
+   
+   :arg socket: socket to set option on
+   :type socket: `tcpConn`
+   :arg level: protocol level
+   :type level: `int(32)`
+   :arg optname: option to set.
+   :type optname: `int(32)`
+   :arg value: value to set on option
+   :type value: `int(32)`
+   :throws SystemError: Upon incompatible arguments
+                        and socket.
+   
+
+.. function:: proc setSockOpt(ref socket: tcpListener, level: c_int, optname: c_int, value: c_int) throws
+
+   
+   See above
+   
+
+.. function:: proc setSockOpt(ref socket: udpSocket, level: c_int, optname: c_int, value: c_int) throws
+
+   
+   See above
+   
+
+.. function:: proc setSockOpt(ref socket: tcpConn, level: c_int, optname: c_int, value: bytes) throws
+
+   
+   Overload for :proc:`setSockOpt` that allows setting a :mod:`bytes <Bytes>` value
+   on socket option. It is up to the caller to ensure that the
+   `value` which is a :type::mod:`bytes <Bytes>` parameter contains the proper bits.
+   
+   :arg socket: socket to set option on
+   :type socket: `tcpConn`
+   :arg level: protocol level
+   :type level: `int(32)`
+   :arg optname: option to set.
+   :type optname: `int(32)`
+   :arg value: value to set on option
+   :type value: :mod:`bytes <Bytes>`
+   :throws SystemError: Upon incompatible arguments
+                        and socket.
+   
+
+.. function:: proc setSockOpt(ref socket: tcpListener, level: c_int, optname: c_int, value: bytes) throws
+
+   
+   See above
+   
+
+.. function:: proc setSockOpt(ref socket: udpSocket, level: c_int, optname: c_int, value: bytes) throws
+
+   
+   See above
+   
+
+.. function:: proc setSockOpt(ref socket: tcpConn, level: c_int, optname: c_int, value: nothing, optlen: socklen_t) throws
+
+   
+   Overload for :proc:`setSockOpt` which is equivalent to calling setsockopt() C
+   function with `optval=NULL` and `optlen=optlen`.
+   
+   :arg socket: socket to set option on
+   :type socket: `tcpConn`
+   :arg level: protocol level
+   :type level: `int(32)`
+   :arg optname: option to set.
+   :type optname: `int(32)`
+   :arg value: None
+   :type value: `nothing`
+   :arg optlen: size of option
+   :type optlen: `int(32)`
+   :throws SystemError: Upon incompatible arguments
+                        and socket.
+   
+
+.. function:: proc setSockOpt(ref socket: tcpListener, level: c_int, optname: c_int, value: nothing, optlen: socklen_t) throws
+
+   
+   See above
+   
+
+.. function:: proc setSockOpt(ref socket: udpSocket, level: c_int, optname: c_int, value: nothing, optlen: socklen_t) throws
+
+   
+   See above
+   
+
+.. function:: proc getSocketOpt(ref socket: tcpConn, level: c_int, optname: c_int): int(32) throws
+
+   
+   Returns the value of the given socket option (see `getsockopt </https://pubs.opengroup.org/onlinepubs/9699919799/functions/getsockopt.html>`_)
+   on provided :type:`tcpConn`. The needed symbolic constants (SO_* etc.)
+   are defined in :mod:`Sys` module.
+   
+   :arg socket: socket to set option on
+   :type socket: `tcpConn`
+   :arg level: protocol level
+   :type level: `int(32)`
+   :arg optname: option to set.
+   :type optname: `int(32)`
+   :return: value of socket option
+   :rtype: `int(32)`
+   :throws SystemError: Upon incompatible arguments
+                        and socket.
+   
+
+.. function:: proc getSocketOpt(ref socket: tcpListener, level: c_int, optname: c_int): int(32) throws
+
+   
+   See above
+   
+
+.. function:: proc getSocketOpt(ref socket: udpSocket, level: c_int, optname: c_int): int(32) throws
+
+   
+   See above
+   
+
+.. function:: proc getSocketOpt(ref socket: tcpConn, level: c_int, optname: c_int, buflen = 0): bytes throws
+
+   
+   Returns the value of the given socket option which is expected to be of type
+   :mod:`bytes <Bytes>` on provided :type:`tcpConn`. The needed symbolic constants (SO_* etc.)
+   are defined in :mod:`Sys` module.
+   
+   :arg socket: socket to set option on
+   :type socket: `tcpConn`
+   :arg level: protocol level
+   :type level: `int(32)`
+   :arg optname: option to set.
+   :type optname: `int(32)`
+   :return: value of socket option
+   :rtype: :mod:`bytes <Bytes>`
+   :throws SystemError: Upon incompatible arguments
+                        and socket.
+   
+
+.. function:: proc getSocketOpt(ref socket: tcpListener, level: c_int, optname: c_int, buflen = 0): bytes throws
+
+   
+   See Above
+   
+
+.. function:: proc getSocketOpt(ref socket: udpSocket, level: c_int, optname: c_int, buflen = 0): bytes throws
+
+   
+   See Above
+   
+
+.. function:: proc getpeername(ref socket: tcpConn): ipAddr throws
+
+   
+   Returns the remote addressto which socket is connected. This is
+   useful to find out the port number of a remote IPv4/v6 socket, for instance.
+   
+   :arg socket: socket to set option on
+   :type socket: `tcpConn`
+   
+   :return: remote address
+   :rtype: `ipAddr`
+   :throws SystemError: If socket is not connected
+   
+
+.. function:: proc getsockname(ref socket: tcpConn): ipAddr throws
+
+   
+   Returns the socket's own address. This is useful to find out the port
+   number of a remote IPv4/v6 socket, for instance.
+   
+   :arg socket: socket to set option on
+   :type socket: `tcpConn`
+   
+   :return: remote address
+   :rtype: `ipAddr`
+   :throws SystemError: If socket is closed.
+   
+
+.. function:: proc getsockname(ref socket: tcpListener): ipAddr throws
+
+   
+   See Above
+   
+
+.. function:: proc getsockname(ref socket: udpSocket): ipAddr throws
+
+   
+   See Above
+   
+
+.. function:: proc bind(ref socket: udpSocket, ref address: ipAddr, reuseAddr = true) throws
+
+   
+   Bind the socket to address. The socket must not already be bound.
+   
+   :arg socket: socket to set option on
+   :type socket: `tcpConn`
+   :arg address: address to bind to
+   :type address: `ipAddr`
+   :arg reuseAddr: whether to reuse address if already in use
+   :type address: `boolean`
+   
+   :throws SystemError: If socket is closed or already bound.
+   
+
+.. function:: proc bind(ref socket: tcpListener, ref address: ipAddr, reuseAddr = true) throws
+
+   
+   See Above
+   
+
+.. function:: proc bind(ref socket: tcpConn, ref address: ipAddr, reuseAddr = true) throws
+
+   
+   See Above
+   
+
+.. function:: proc naggle(ref socket: tcpListener, enable: bool = true) throws
+
+   
+   Enables or disables Nagle's algorithm on a given TCP Listener.
+   
+
+.. function:: proc naggle(ref socket: tcpConn, enable: bool = true) throws
+
+   
+   Enables or disables Nagle's algorithm on a given TCP Connection.
+   
+
+.. function:: proc delayAck(ref socket: tcpListener, enable: bool = true) throws
+
+   
+   Enables or disables Delayed Ack optimization on a given TCP Listener.
+   
+
+.. function:: proc delayAck(ref socket: tcpConn, enable: bool = true) throws
+
+   
+   Enables or disables Delayed Ack optimization on a given TCP Connection.
+   
+
