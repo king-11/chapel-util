@@ -11,6 +11,8 @@ def createConnect(i):
 	try:
 		s = socket.create_connection((host, port))
 		s.send(f"hello {i}\n".encode())
+		data = s.recv(100)
+		print(data)
 	except ConnectionResetError or ConnectionRefusedError:
 		pass
 
