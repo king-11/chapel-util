@@ -236,8 +236,8 @@ version 0.1.0.</p>
 </div>
 <div class="section" id="building">
 <h2>Building<a class="headerlink" href="#building" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">c2chapel</span></code> is built on top of <a class="reference external" href="https://github.com/eliben/pycparser">pycparser</a>.
-Building <code class="docutils literal notranslate"><span class="pre">c2chapel</span></code> will install pycparser into a local virtualenv, leaving
+<p><code class="docutils literal notranslate"><span class="pre">c2chapel</span></code> is built on top of <a class="reference external" href="https://github.com/eliben/pycparser">pycparser</a> and <a class="reference external" href="https://github.com/inducer/pycparserext">pycparserext</a>.
+Building <code class="docutils literal notranslate"><span class="pre">c2chapel</span></code> will install pycparser and pycparserext into a local virtualenv, leaving
 the user’s python environment untouched. A symbolic link will be created in the
 appropriate directory under <code class="docutils literal notranslate"><span class="pre">$CHPL_HOME/bin</span></code>.</p>
 <p>To build, run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">c2chapel</span></code> from <code class="docutils literal notranslate"><span class="pre">$CHPL_HOME</span></code>.</p>
@@ -270,7 +270,7 @@ command from within tools/c2chapel/:</p>
 <p>The resulting output should be identical to <code class="docutils literal notranslate"><span class="pre">tools/c2chapel/test/fnints.chpl</span></code>.
 Run <code class="docutils literal notranslate"><span class="pre">c2chapel</span></code> with the <code class="docutils literal notranslate"><span class="pre">--help</span></code> flag to show more options:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: c2chapel [-h] [--no-typedefs] [--debug] [--no-fake-headers]
-                [--no-comments] [-V]
+                [--no-comments] [-V] [--gnu-extensions]
                 file [cppFlags [cppFlags ...]]
 
 Generate C bindings for Chapel
@@ -287,6 +287,7 @@ optional arguments:
   --no-fake-headers  do not use fake headers included with c2chapel
   --no-comments      instruct c2chapel to not generate comments
   -V, --version      show program&#39;s version number and exit
+  --gnu-extensions   allow GNU extensions in C99 files
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">c2chapel</span></code> by default uses the fake standard headers included with pycparser.
@@ -313,6 +314,7 @@ See <a class="reference external" href="https://chapel-lang.org/bugs.html">https
 <div class="line-block">
 <div class="line">Ben Harshbarger [HPE]</div>
 <div class="line">Nikhil Padmanabhan [Yale University]</div>
+<div class="line">Ben McDonald [HPE]</div>
 <div class="line"><br /></div>
 </div>
 </div>

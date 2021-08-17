@@ -133,6 +133,7 @@ include "../..//versionButton.php";
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="Path.html">Path</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Socket.html">Socket</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../standard.html#language-support">Language Support</a></li>
@@ -1917,9 +1918,9 @@ Stores any error encountered in the channel. Does not return anything.</p>
 </dl>
 </dd></dl>
 
-<dl class="chpl function">
+<dl class="chpl method">
 <dt class="sig sig-object chpl">
-<span class="sig-name descname"><span class="pre">proc</span> <span class="pre">&lt;~&gt;(const</span> <span class="pre">ref</span> <span class="pre">ch:</span> <span class="pre">channel,</span> <span class="pre">const</span> <span class="pre">x)</span> <span class="pre">const</span> <span class="pre">ref</span> <span class="pre">throws</span></span></dt>
+<span class="sig-name descname"><span class="pre">proc</span> <span class="pre">type</span> <span class="pre">channel.&lt;~&gt;(const</span> <span class="pre">ref</span> <span class="pre">ch:</span> <span class="pre">channel,</span> <span class="pre">const</span> <span class="pre">x)</span> <span class="pre">const</span> <span class="pre">ref</span> <span class="pre">throws</span></span></dt>
 <dd><p>The <span class="target" id="operator">&lt;~&gt; operator</span></p>
 <p>This <cite>&lt;~&gt;</cite> operator is the same as calling <a class="reference internal" href="#IO.channel.readwrite" title="IO.channel.readwrite"><code class="xref chpl chpl-proc docutils literal notranslate"><span class="pre">channel.readwrite</span></code></a>,
 except that it returns the channel so that multiple operator
@@ -1934,9 +1935,9 @@ calls can be chained together.</p>
 </dl>
 </dd></dl>
 
-<dl class="chpl function">
+<dl class="chpl method">
 <dt class="sig sig-object chpl">
-<span class="sig-name descname"><span class="pre">proc</span> <span class="pre">&lt;~&gt;(const</span> <span class="pre">ref</span> <span class="pre">r:</span> <span class="pre">channel,</span> <span class="pre">lit:</span> <span class="pre">ioLiteral)</span> <span class="pre">const</span> <span class="pre">ref</span> <span class="pre">throws</span></span></dt>
+<span class="sig-name descname"><span class="pre">proc</span> <span class="pre">type</span> <span class="pre">channel.&lt;~&gt;(const</span> <span class="pre">ref</span> <span class="pre">r:</span> <span class="pre">channel,</span> <span class="pre">lit:</span> <span class="pre">ioLiteral)</span> <span class="pre">const</span> <span class="pre">ref</span> <span class="pre">throws</span></span></dt>
 <dd><p>Overload to support reading an <a class="reference internal" href="#IO.ioLiteral" title="IO.ioLiteral"><code class="xref chpl chpl-type docutils literal notranslate"><span class="pre">IO.ioLiteral</span></code></a> without
 passing ioLiterals by reference, so that</p>
 <div class="highlight-chapel notranslate"><div class="highlight"><pre><span></span><span class="nx">reader</span> <span class="o">&lt;~&gt;</span> <span class="k">new</span> <span class="nx">ioLiteral</span><span class="p">(</span><span class="s">&quot;=&quot;</span><span class="p">)</span>
@@ -1946,9 +1947,9 @@ passing ioLiterals by reference, so that</p>
 the ioLiteral.</p>
 </dd></dl>
 
-<dl class="chpl function">
+<dl class="chpl method">
 <dt class="sig sig-object chpl">
-<span class="sig-name descname"><span class="pre">proc</span> <span class="pre">&lt;~&gt;(const</span> <span class="pre">ref</span> <span class="pre">r:</span> <span class="pre">channel,</span> <span class="pre">nl:</span> <span class="pre">ioNewline)</span> <span class="pre">const</span> <span class="pre">ref</span> <span class="pre">throws</span></span></dt>
+<span class="sig-name descname"><span class="pre">proc</span> <span class="pre">type</span> <span class="pre">channel.&lt;~&gt;(const</span> <span class="pre">ref</span> <span class="pre">r:</span> <span class="pre">channel,</span> <span class="pre">nl:</span> <span class="pre">ioNewline)</span> <span class="pre">const</span> <span class="pre">ref</span> <span class="pre">throws</span></span></dt>
 <dd><p>Overload to support reading an <a class="reference internal" href="#IO.ioNewline" title="IO.ioNewline"><code class="xref chpl chpl-type docutils literal notranslate"><span class="pre">IO.ioNewline</span></code></a> without
 passing ioNewline by reference, so that</p>
 <div class="highlight-chapel notranslate"><div class="highlight"><pre><span></span><span class="nx">reader</span> <span class="o">&lt;~&gt;</span> <span class="k">new</span> <span class="nx">ioNewline</span><span class="p">()</span>

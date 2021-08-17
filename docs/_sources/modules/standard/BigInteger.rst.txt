@@ -207,6 +207,23 @@ See :mod:`GMP` for more information on how to use GMP with Chapel.
 
    .. method:: proc sizeinbase(base: int): uint
 
+   .. method:: proc sizeInBase(base: int): int
+
+      Determine the size of ``this`` measured in number of digits in the given
+      ``base``.  The sign of ``this`` is ignored, only the absolute value is
+      used.
+      
+      :arg base: The base in which to compute the number of digits used to
+                 represent ``this``.  Can be between 2 and 62.
+      :type base: ``int``
+      
+      :returns: The size of ``this`` measured in number of digits in the given
+                ``base``.  Will either be exact or 1 too big.  If ``base`` is
+                a power of 2, will always be exact.  If ``this`` is 0, will
+                always return 1.
+      :rtype: ``int``
+      
+
    .. method:: proc numLimbs: uint
 
    .. method:: proc get_limbn(n: integral): uint
@@ -629,7 +646,7 @@ See :mod:`GMP` for more information on how to use GMP with Chapel.
    :type rounding: ``round``
    
    .. warning::
-      If the denominator is zero, the progam behavior is undefined.
+      If the denominator is zero, the program behavior is undefined.
    
 
 .. method:: proc bigint.div_r(const ref n: bigint, const ref d: bigint, param rounding = Round.ZERO)

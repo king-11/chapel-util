@@ -1574,7 +1574,7 @@ IO Functions and Types
    :throws SystemError: When an IO error has occurred.
    
 
-.. function:: proc <~>(const ref ch: channel, const x) const ref throws
+.. method:: proc type channel.<~>(const ref ch: channel, const x) const ref throws
 
    
    
@@ -1588,7 +1588,7 @@ IO Functions and Types
    :throws SystemError: When an IO error has occurred.
    
 
-.. function:: proc <~>(const ref r: channel, lit: ioLiteral) const ref throws
+.. method:: proc type channel.<~>(const ref r: channel, lit: ioLiteral) const ref throws
 
    Overload to support reading an :type:`IO.ioLiteral` without
    passing ioLiterals by reference, so that
@@ -1601,7 +1601,7 @@ IO Functions and Types
    the ioLiteral.
    
 
-.. function:: proc <~>(const ref r: channel, nl: ioNewline) const ref throws
+.. method:: proc type channel.<~>(const ref r: channel, nl: ioNewline) const ref throws
 
    Overload to support reading an :type:`IO.ioNewline` without
    passing ioNewline by reference, so that

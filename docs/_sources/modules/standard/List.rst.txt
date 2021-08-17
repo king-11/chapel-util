@@ -598,12 +598,20 @@ into a list is O(1).
       :yields: A reference to one of the elements contained in this list.
       
 
-   .. method:: proc readWriteThis(ch: channel) throws
+   .. method:: proc writeThis(ch: channel) throws
 
       
       Write the contents of this list to a channel.
       
       :arg ch: A channel to write to.
+      
+
+   .. method:: proc readThis(ch: channel) throws
+
+      
+      Read the contents of this list from a channel.
+      
+      :arg ch: A channel to read from.
       
 
    .. method:: proc isEmpty(): bool

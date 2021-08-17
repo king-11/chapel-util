@@ -417,6 +417,29 @@ denominator.</p></li>
 <dd></dd></dl>
 
 <dl class="chpl method">
+<dt class="sig sig-object chpl" id="BigInteger.bigint.sizeInBase">
+<em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">sizeInBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">base:</span> <span class="pre">int</span></em><span class="sig-paren">)</span><span class="pre">:</span> <span class="pre">int</span><a class="headerlink" href="#BigInteger.bigint.sizeInBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine the size of <code class="docutils literal notranslate"><span class="pre">this</span></code> measured in number of digits in the given
+<code class="docutils literal notranslate"><span class="pre">base</span></code>.  The sign of <code class="docutils literal notranslate"><span class="pre">this</span></code> is ignored, only the absolute value is
+used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><p><strong>base</strong> : <code class="docutils literal notranslate"><span class="pre">int</span></code> – The base in which to compute the number of digits used to
+represent <code class="docutils literal notranslate"><span class="pre">this</span></code>.  Can be between 2 and 62.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The size of <code class="docutils literal notranslate"><span class="pre">this</span></code> measured in number of digits in the given
+<code class="docutils literal notranslate"><span class="pre">base</span></code>.  Will either be exact or 1 too big.  If <code class="docutils literal notranslate"><span class="pre">base</span></code> is
+a power of 2, will always be exact.  If <code class="docutils literal notranslate"><span class="pre">this</span></code> is 0, will
+always return 1.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="chpl method">
 <dt class="sig sig-object chpl" id="BigInteger.bigint.numLimbs">
 <em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">numLimbs</span></span><span class="pre">:</span> <span class="pre">uint</span><a class="headerlink" href="#BigInteger.bigint.numLimbs" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -1395,7 +1418,7 @@ description of what the rounding styles entail.  Defaults to
 </dl>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>If the denominator is zero, the progam behavior is undefined.</p>
+<p>If the denominator is zero, the program behavior is undefined.</p>
 </div>
 </dd></dl>
 

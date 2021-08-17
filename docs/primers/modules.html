@@ -752,19 +752,8 @@ braces.</p>
 </pre></div>
 </div>
 <p>You can also <code class="docutils literal notranslate"><span class="pre">use</span></code> a module without making any symbols
-available in an unqualified manner using an asterisk after
-<code class="docutils literal notranslate"><span class="pre">except</span></code>…</p>
-<div class="highlight-chapel notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-  <span class="k">use</span> <span class="nx">modToUse</span> <span class="k">except</span> <span class="o">*</span><span class="p">;</span>
-  <span class="k">use</span> <span class="nx">Conflict</span> <span class="k">except</span> <span class="o">*</span><span class="p">;</span>
-  <span class="nx">writeln</span><span class="p">(</span><span class="nx">modToUse</span><span class="p">.</span><span class="nx">bar</span><span class="p">);</span>  <span class="c1">// Outputs modToUse.bar (&#39;2&#39;)</span>
-  <span class="nx">writeln</span><span class="p">(</span><span class="nx">Conflict</span><span class="p">.</span><span class="nx">bar</span><span class="p">);</span>  <span class="c1">// Outputs Conflict.bar (&#39;5&#39;)</span>
-  <span class="c1">// writeln(bar);        // this won&#39;t resolve since bar isn&#39;t available</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>…or equivalently, an empty identifier list after <code class="docutils literal notranslate"><span class="pre">only</span></code>.
-These forms are typically used by programmers who prefer to
+available in an unqualified manner using an empty identifier list after
+<code class="docutils literal notranslate"><span class="pre">only</span></code>.  This form is typically used by programmers who prefer to
 always fully qualify accesses to their modules’ symbols.</p>
 <div class="highlight-chapel notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="k">use</span> <span class="nx">modToUse</span> <span class="k">only</span><span class="p">;</span>
@@ -775,7 +764,7 @@ always fully qualify accesses to their modules’ symbols.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Again, these are similar to an <code class="docutils literal notranslate"><span class="pre">import</span></code> of just the module itself.</p>
+<p>Again, this is similar to an <code class="docutils literal notranslate"><span class="pre">import</span></code> of just the module itself.</p>
 <div class="highlight-chapel notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="k">import</span> <span class="nx">modToUse</span><span class="p">;</span>
   <span class="k">import</span> <span class="nx">Conflict</span><span class="p">;</span>

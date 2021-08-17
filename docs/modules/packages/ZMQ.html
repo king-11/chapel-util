@@ -304,18 +304,18 @@ underlying ØMQ context. To create a context, it is sufficient to write:</p>
 <p>In ZeroMQ, a <cite>socket</cite> is an opaque handle to an asynchronous, message-based
 communication channel that is “typed” to provide one of a series of common
 communication patterns (i.e., the socket type).</p>
-<p>In Chapel, as with a <a class="reference internal" href="#ZMQ.Context" title="ZMQ.Context"><code class="xref chpl chpl-record docutils literal notranslate"><span class="pre">Context</span></code></a>, a <a class="reference internal" href="#ZMQ.Socket" title="ZMQ.Socket"><code class="xref chpl chpl-record docutils literal notranslate"><span class="pre">Socket</span></code></a> is a
+<p>In Chapel, as with a <a class="reference internal" href="#ZMQ.Context" title="ZMQ.Context"><code class="xref chpl chpl-record docutils literal notranslate"><span class="pre">Context</span></code></a>, a <a class="reference internal" href="../standard/Socket.html#module-Socket" title="Socket: Socket Module library, specifically related to IP Sockets."><code class="xref chpl chpl-record docutils literal notranslate"><span class="pre">Socket</span></code></a> is a
 reference-counted wrapper around the underlying ØMQ socket.  Sockets are
 created via <a class="reference internal" href="#ZMQ.Context.socket" title="ZMQ.Context.socket"><code class="xref chpl chpl-proc docutils literal notranslate"><span class="pre">Context.socket()</span></code></a> and maintain a reference to the parent
 context, so that the parent context may go out of scope and the context will
 not be reclaimed while any sockets are still in use.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>As with ØMQ’s C API, a <a class="reference internal" href="#ZMQ.Socket" title="ZMQ.Socket"><code class="xref chpl chpl-record docutils literal notranslate"><span class="pre">Socket</span></code></a> object is not thread safe.
-That is, a <a class="reference internal" href="#ZMQ.Socket" title="ZMQ.Socket"><code class="xref chpl chpl-record docutils literal notranslate"><span class="pre">Socket</span></code></a> object should not be accessed concurrently by
+<p>As with ØMQ’s C API, a <a class="reference internal" href="../standard/Socket.html#module-Socket" title="Socket: Socket Module library, specifically related to IP Sockets."><code class="xref chpl chpl-record docutils literal notranslate"><span class="pre">Socket</span></code></a> object is not thread safe.
+That is, a <a class="reference internal" href="../standard/Socket.html#module-Socket" title="Socket: Socket Module library, specifically related to IP Sockets."><code class="xref chpl chpl-record docutils literal notranslate"><span class="pre">Socket</span></code></a> object should not be accessed concurrently by
 multiple Chapel tasks.  (This may change in a future ZMQ module.)</p>
 </div>
-<p>A <a class="reference internal" href="#ZMQ.Socket" title="ZMQ.Socket"><code class="xref chpl chpl-record docutils literal notranslate"><span class="pre">Socket</span></code></a> may be one of the socket types in the following list of
+<p>A <a class="reference internal" href="../standard/Socket.html#module-Socket" title="Socket: Socket Module library, specifically related to IP Sockets."><code class="xref chpl chpl-record docutils literal notranslate"><span class="pre">Socket</span></code></a> may be one of the socket types in the following list of
 compatible pairs of socket types
 <a class="reference external" href="http://zguide.zeromq.org/page:all#Messaging-Patterns">[ref]</a>:</p>
 <ul class="simple">
@@ -443,9 +443,9 @@ a Chapel server and a Python client using the
 </div>
 <div class="section" id="tasking-layer-interaction">
 <h3>Tasking-Layer Interaction<a class="headerlink" href="#tasking-layer-interaction" title="Permalink to this headline">¶</a></h3>
-<p>As noted previously, a <a class="reference internal" href="#ZMQ.Socket" title="ZMQ.Socket"><code class="xref chpl chpl-record docutils literal notranslate"><span class="pre">Socket</span></code></a> object is not thread safe.  As the
+<p>As noted previously, a <a class="reference internal" href="../standard/Socket.html#module-Socket" title="Socket: Socket Module library, specifically related to IP Sockets."><code class="xref chpl chpl-record docutils literal notranslate"><span class="pre">Socket</span></code></a> object is not thread safe.  As the
 mapping of Chapel tasks to OS threads is dependent on the Chapel tasking layer
-and may be cooperatively scheduled, a <a class="reference internal" href="#ZMQ.Socket" title="ZMQ.Socket"><code class="xref chpl chpl-record docutils literal notranslate"><span class="pre">Socket</span></code></a> object should not be
+and may be cooperatively scheduled, a <a class="reference internal" href="../standard/Socket.html#module-Socket" title="Socket: Socket Module library, specifically related to IP Sockets."><code class="xref chpl chpl-record docutils literal notranslate"><span class="pre">Socket</span></code></a> object should not be
 accessed concurrently by multiple Chapel tasks.</p>
 <p>The ZMQ module is designed to “play nicely” with the Chapel tasking layer.
 While the C-level call <code class="docutils literal notranslate"><span class="pre">zmq_send()</span></code> may be a blocking call (depending on
@@ -546,7 +546,7 @@ Note that this record contains private fields not listed below.</p>
 <dl class="chpl method">
 <dt class="sig sig-object chpl" id="ZMQ.Context.socket">
 <em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">socket</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">sockType:</span> <span class="pre">int</span></em><span class="sig-paren">)</span><span class="pre">:</span> <span class="pre">Socket</span><a class="headerlink" href="#ZMQ.Context.socket" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a <a class="reference internal" href="#ZMQ.Socket" title="ZMQ.Socket"><code class="xref chpl chpl-record docutils literal notranslate"><span class="pre">Socket</span></code></a> of type <cite>sockType</cite> from this context.</p>
+<dd><p>Create a <a class="reference internal" href="../standard/Socket.html#module-Socket" title="Socket: Socket Module library, specifically related to IP Sockets."><code class="xref chpl chpl-record docutils literal notranslate"><span class="pre">Socket</span></code></a> of type <cite>sockType</cite> from this context.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Arguments</dt>
 <dd class="field-odd"><p><strong>sockType</strong> : <cite>int</cite> – The ZMQ socket type to be created;

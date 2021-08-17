@@ -43,7 +43,9 @@
 
     
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" /> 
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Reflection" href="Reflection.html" />
+    <link rel="prev" title="Path" href="Path.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -101,13 +103,37 @@ include "../..//versionButton.php";
 <li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Writing Chapel Programs</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../language/reference.html">Quick Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../examples/index.html">Hello World Variants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../primers/index.html">Primers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../language/spec/index.html">Language Specification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../builtins/index.html">Built-in Types and Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../standard.html">Standard Modules</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../standard.html">Standard Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../standard.html#automatic-modules">Automatic Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../standard.html#data-structures">Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../standard.html#diagnostics">Diagnostics</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../standard.html#files-io">Files/IO</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="FileSystem.html">FileSystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="IO.html">IO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Path.html">Path</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Socket</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#records">Records</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#enum">Enum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#procedures">Procedures</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#records-types-and-function-definitions">Records, Types and Function Definitions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../standard.html#language-support">Language Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../standard.html#math-numerical">Math/Numerical</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../standard.html#parallelism-distributed-computing">Parallelism/Distributed Computing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../standard.html#system-interoperability">System/Interoperability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../standard.html#utilities">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../standard.html#index">Index</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../packages.html">Package Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../layoutdist.html">Standard Layouts and Distributions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../mason-packages.html">Mason Packages</a></li>
@@ -169,6 +195,8 @@ include "../..//versionButton.php";
     
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
+          <li><a href="../standard.html">Standard Modules</a> &raquo;</li>
+        
       <li>Socket</li>
     
     
@@ -222,7 +250,7 @@ though their usage will be somewhat simpler than the raw Unix socket API.</p>
 <a class="reference internal" href="#Socket.connect" title="Socket.connect"><code class="xref chpl chpl-proc docutils literal notranslate"><span class="pre">connect</span></code></a>
 <a class="reference internal" href="#Socket.delayAck" title="Socket.delayAck"><code class="xref chpl chpl-proc docutils literal notranslate"><span class="pre">delayAck</span></code></a>
 <a class="reference internal" href="#Socket.getpeername" title="Socket.getpeername"><code class="xref chpl chpl-proc docutils literal notranslate"><span class="pre">getpeername</span></code></a>
-<a class="reference internal" href="#Socket.getSocketOpt" title="Socket.getSocketOpt"><code class="xref chpl chpl-proc docutils literal notranslate"><span class="pre">getSocketOpt</span></code></a>
+<a class="reference internal" href="#Socket.getSockOpt" title="Socket.getSockOpt"><code class="xref chpl chpl-proc docutils literal notranslate"><span class="pre">getSockOpt</span></code></a>
 <a class="reference internal" href="#Socket.getsockname" title="Socket.getsockname"><code class="xref chpl chpl-proc docutils literal notranslate"><span class="pre">getsockname</span></code></a>
 <a class="reference internal" href="#Socket.listen" title="Socket.listen"><code class="xref chpl chpl-proc docutils literal notranslate"><span class="pre">listen</span></code></a>
 <a class="reference internal" href="#Socket.naggle" title="Socket.naggle"><code class="xref chpl chpl-proc docutils literal notranslate"><span class="pre">naggle</span></code></a>
@@ -240,12 +268,14 @@ Protocol Families to be used when creating Sockets.</p>
 <dl class="chpl type">
 <dt class="sig sig-object chpl" id="Socket.ipv4Addr">
 <em class="property"><span class="pre">type</span> </em><span class="sig-name descname"><span class="pre">ipv4Addr</span></span> <span class="pre">=</span> <span class="pre">sys_in_addr_t</span><a class="headerlink" href="#Socket.ipv4Addr" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Type of Standard IPv4 Address</p>
+</dd></dl>
 
 <dl class="chpl data">
 <dt class="sig sig-object chpl" id="Socket.IPv4Localhost">
 <em class="property"><span class="pre">const</span> </em><span class="sig-name descname"><span class="pre">IPv4Localhost</span></span><span class="pre">:</span> <span class="pre">ipv4Addr</span> <span class="pre">=</span> <span class="pre">INADDR_LOOPBACK</span><a class="headerlink" href="#Socket.IPv4Localhost" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Standard IPv4 Addresses of type <a class="reference internal" href="#Socket.ipv4Addr" title="Socket.ipv4Addr"><code class="xref chpl chpl-type docutils literal notranslate"><span class="pre">ipv4Addr</span></code></a></p>
+</dd></dl>
 
 <dl class="chpl data">
 <dt class="sig sig-object chpl" id="Socket.IPv4Any">
@@ -260,12 +290,14 @@ Protocol Families to be used when creating Sockets.</p>
 <dl class="chpl type">
 <dt class="sig sig-object chpl" id="Socket.ipv6Addr">
 <em class="property"><span class="pre">type</span> </em><span class="sig-name descname"><span class="pre">ipv6Addr</span></span> <span class="pre">=</span> <span class="pre">sys_in6_addr_t</span><a class="headerlink" href="#Socket.ipv6Addr" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Type of Standard IPv6 Address</p>
+</dd></dl>
 
 <dl class="chpl data">
 <dt class="sig sig-object chpl" id="Socket.IPv6Localhost">
 <em class="property"><span class="pre">const</span> </em><span class="sig-name descname"><span class="pre">IPv6Localhost</span></span><span class="pre">:</span> <span class="pre">ipv6Addr</span> <span class="pre">=</span> <span class="pre">in6addr_loopback</span><a class="headerlink" href="#Socket.IPv6Localhost" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Standard IPv6 Addresses of type <a class="reference internal" href="#Socket.ipv6Addr" title="Socket.ipv6Addr"><code class="xref chpl chpl-type docutils literal notranslate"><span class="pre">ipv6Addr</span></code></a></p>
+</dd></dl>
 
 <dl class="chpl data">
 <dt class="sig sig-object chpl" id="Socket.IPv6Any">
@@ -281,13 +313,12 @@ about <a class="reference internal" href="#Socket.IPFamily" title="Socket.IPFami
 
 <dl class="chpl method">
 <dt class="sig sig-object chpl" id="Socket.ipAddr.create">
-<em class="property"><span class="pre">proc</span> <span class="pre">type</span> </em><span class="sig-prename descclassname"><span class="pre">ipAddr.</span></span><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">host:</span> <span class="pre">string</span> <span class="pre">=</span> <span class="pre">&quot;127.0.0.1&quot;</span></em>, <em class="sig-param"><span class="pre">port:</span> <span class="pre">uint(16)</span> <span class="pre">=</span> <span class="pre">8000</span></em>, <em class="sig-param"><span class="pre">family:</span> <span class="pre">IPFamily</span> <span class="pre">=</span> <span class="pre">IPFamily.IPv4</span></em><span class="sig-paren">)</span> <span class="pre">throws</span><a class="headerlink" href="#Socket.ipAddr.create" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">proc</span> <span class="pre">type</span> </em><span class="sig-prename descclassname"><span class="pre">ipAddr.</span></span><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">host:</span> <span class="pre">string</span> <span class="pre">=</span> <span class="pre">&quot;127.0.0.1&quot;</span></em>, <em class="sig-param"><span class="pre">port:</span> <span class="pre">uint(16)</span> <span class="pre">=</span> <span class="pre">8000</span></em>, <em class="sig-param"><span class="pre">family:</span> <span class="pre">IPFamily</span> <span class="pre">=</span> <span class="pre">IPFamily.IPv4</span></em><span class="sig-paren">)</span><span class="pre">:</span> <span class="pre">ipAddr</span> <span class="pre">throws</span><a class="headerlink" href="#Socket.ipAddr.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a new record of type <a class="reference internal" href="#Socket.ipAddr" title="Socket.ipAddr"><code class="xref chpl chpl-type docutils literal notranslate"><span class="pre">ipAddr</span></code></a> prvoided <cite>host</cite>, <cite>port</cite>
-and <cite>family</cite>. this function is equivalent to the following code:
-.. code-block:: Chapel</p>
-<blockquote>
-<div><p>ipAddr.create(“127.0.0.1”, 8111, IPFamily.IPv4)</p>
-</div></blockquote>
+and <cite>family</cite>. this function is equivalent to the following code:</p>
+<div class="highlight-Chapel notranslate"><div class="highlight"><pre><span></span><span class="nx">ipAddr</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">8111</span><span class="p">,</span> <span class="nx">IPFamily</span><span class="p">.</span><span class="nx">IPv4</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Arguments</dt>
 <dd class="field-odd"><ul class="simple">
@@ -310,14 +341,13 @@ and <cite>family</cite>. this function is equivalent to the following code:
 
 <dl class="chpl method">
 <dt class="sig sig-object chpl" id="Socket.ipAddr.ipv4">
-<em class="property"><span class="pre">proc</span> <span class="pre">type</span> </em><span class="sig-prename descclassname"><span class="pre">ipAddr.</span></span><span class="sig-name descname"><span class="pre">ipv4</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">host:</span> <span class="pre">ipv4Addr</span></em>, <em class="sig-param"><span class="pre">port:</span> <span class="pre">uint(16)</span> <span class="pre">=</span> <span class="pre">8000</span></em><span class="sig-paren">)</span> <span class="pre">throws</span><a class="headerlink" href="#Socket.ipAddr.ipv4" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">proc</span> <span class="pre">type</span> </em><span class="sig-prename descclassname"><span class="pre">ipAddr.</span></span><span class="sig-name descname"><span class="pre">ipv4</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">host:</span> <span class="pre">ipv4Addr</span></em>, <em class="sig-param"><span class="pre">port:</span> <span class="pre">uint(16)</span> <span class="pre">=</span> <span class="pre">8000</span></em><span class="sig-paren">)</span><span class="pre">:</span> <span class="pre">ipAddr</span> <span class="pre">throws</span><a class="headerlink" href="#Socket.ipAddr.ipv4" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a new record of type <cite>ipAddr</cite> prvoided <cite>host</cite> and <cite>port</cite>.
 The family type is assumed based on <cite>host</cite> which is a standard address.
-this function is equivalent to the following code:
-.. code-block:: Chapel</p>
-<blockquote>
-<div><p>ipAddr.ipv4(IPv4LocalHost, 8111)</p>
-</div></blockquote>
+this function is equivalent to the following code:</p>
+<div class="highlight-Chapel notranslate"><div class="highlight"><pre><span></span><span class="nx">ipAddr</span><span class="p">.</span><span class="nx">ipv4</span><span class="p">(</span><span class="nx">IPv4LocalHost</span><span class="p">,</span> <span class="mi">8111</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Arguments</dt>
 <dd class="field-odd"><ul class="simple">
@@ -339,14 +369,13 @@ this function is equivalent to the following code:
 
 <dl class="chpl method">
 <dt class="sig sig-object chpl" id="Socket.ipAddr.ipv6">
-<em class="property"><span class="pre">proc</span> <span class="pre">type</span> </em><span class="sig-prename descclassname"><span class="pre">ipAddr.</span></span><span class="sig-name descname"><span class="pre">ipv6</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">host:</span> <span class="pre">ipv6Addr</span></em>, <em class="sig-param"><span class="pre">port:</span> <span class="pre">uint(16)</span> <span class="pre">=</span> <span class="pre">8000</span></em><span class="sig-paren">)</span> <span class="pre">throws</span><a class="headerlink" href="#Socket.ipAddr.ipv6" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">proc</span> <span class="pre">type</span> </em><span class="sig-prename descclassname"><span class="pre">ipAddr.</span></span><span class="sig-name descname"><span class="pre">ipv6</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">host:</span> <span class="pre">ipv6Addr</span></em>, <em class="sig-param"><span class="pre">port:</span> <span class="pre">uint(16)</span> <span class="pre">=</span> <span class="pre">8000</span></em><span class="sig-paren">)</span><span class="pre">:</span> <span class="pre">ipAddr</span> <span class="pre">throws</span><a class="headerlink" href="#Socket.ipAddr.ipv6" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a new record of type <cite>ipAddr</cite> prvoided <cite>host</cite> and <cite>port</cite>.
 The family type is assumed based on <cite>host</cite> which is a standard address.
-this function is equivalent to the following code:
-.. code-block:: Chapel</p>
-<blockquote>
-<div><p>ipAddr.ipv6(IPv6LocalHost, 8111)</p>
-</div></blockquote>
+this function is equivalent to the following code:</p>
+<div class="highlight-Chapel notranslate"><div class="highlight"><pre><span></span><span class="nx">ipAddr</span><span class="p">.</span><span class="nx">ipv6</span><span class="p">(</span><span class="nx">IPv6LocalHost</span><span class="p">,</span> <span class="mi">8111</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Arguments</dt>
 <dd class="field-odd"><ul class="simple">
@@ -393,17 +422,20 @@ this function is equivalent to the following code:
 <dl class="chpl function">
 <dt class="sig sig-object chpl" id="Socket.!=">
 <em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">!=</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">in</span> <span class="pre">lhs:</span> <span class="pre">ipAddr</span></em>, <em class="sig-param"><span class="pre">in</span> <span class="pre">rhs:</span> <span class="pre">ipAddr</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Socket.!=" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>compare ipAddr</p>
+</dd></dl>
 
 <dl class="chpl method">
 <dt class="sig sig-object chpl" id="Socket.ipAddr.writeThis">
 <em class="property"><span class="pre">proc</span> </em><span class="sig-prename descclassname"><span class="pre">ipAddr.</span></span><span class="sig-name descname"><span class="pre">writeThis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">f</span></em><span class="sig-paren">)</span> <span class="pre">throws</span><a class="headerlink" href="#Socket.ipAddr.writeThis" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>write ipAddr</p>
+</dd></dl>
 
 <dl class="chpl type">
 <dt class="sig sig-object chpl" id="Socket.tcpConn">
 <em class="property"><span class="pre">type</span> </em><span class="sig-name descname"><span class="pre">tcpConn</span></span> <span class="pre">=</span> <span class="pre">file</span><a class="headerlink" href="#Socket.tcpConn" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Type TCPConn returned from <a class="reference internal" href="#Socket.connect" title="Socket.connect"><code class="xref chpl chpl-proc docutils literal notranslate"><span class="pre">connect</span></code></a></p>
+</dd></dl>
 
 <dl class="chpl method">
 <dt class="sig sig-object chpl" id="Socket.tcpConn.socketFd">
@@ -439,7 +471,8 @@ bound and listening for connections.</p>
 <dl class="chpl attribute">
 <dt class="sig sig-object chpl" id="Socket.tcpListener.socketFd">
 <em class="property"><span class="pre">var</span> </em><span class="sig-name descname"><span class="pre">socketFd</span></span><span class="pre">:</span> <span class="pre">int(32)</span><a class="headerlink" href="#Socket.tcpListener.socketFd" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>File Descriptor Associated with instance</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -469,7 +502,8 @@ any new connection</p>
 <dl class="chpl method">
 <dt class="sig sig-object chpl" id="Socket.tcpListener.close">
 <em class="property"><span class="pre">proc</span> </em><span class="sig-prename descclassname"><span class="pre">tcpListener.</span></span><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Socket.tcpListener.close" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Close the file descriptor</p>
+</dd></dl>
 
 <dl class="chpl method">
 <dt class="sig sig-object chpl" id="Socket.tcpListener.addr">
@@ -498,12 +532,13 @@ listening on and bound to.</p>
 
 <dl class="chpl data">
 <dt class="sig sig-object chpl" id="Socket.BACKLOG_DEFAULT">
-<em class="property"><span class="pre">const</span> </em><span class="sig-name descname"><span class="pre">BACKLOG_DEFAULT</span></span> <span class="pre">=</span> <span class="pre">if</span> <span class="pre">SOMAXCONN</span> <span class="pre">&lt;=</span> <span class="pre">128</span> <span class="pre">then</span> <span class="pre">SOMAXCONN</span> <span class="pre">else</span> <span class="pre">128</span><a class="headerlink" href="#Socket.BACKLOG_DEFAULT" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property"><span class="pre">var</span> </em><span class="sig-name descname"><span class="pre">BACKLOG_DEFAULT</span></span><span class="pre">:</span> <span class="pre">uint(16)</span><a class="headerlink" href="#Socket.BACKLOG_DEFAULT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default <cite>backlog</cite> value used in <a class="reference internal" href="#Socket.listen" title="Socket.listen"><code class="xref chpl chpl-proc docutils literal notranslate"><span class="pre">listen</span></code></a></p>
+</dd></dl>
 
 <dl class="chpl function">
 <dt class="sig sig-object chpl" id="Socket.listen">
-<em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">listen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">in</span> <span class="pre">address:</span> <span class="pre">ipAddr</span></em>, <em class="sig-param"><span class="pre">reuseAddr</span> <span class="pre">=</span> <span class="pre">true</span></em>, <em class="sig-param"><span class="pre">backlog:</span> <span class="pre">integral</span> <span class="pre">=</span> <span class="pre">BACKLOG_DEFAULT</span></em><span class="sig-paren">)</span> <span class="pre">throws</span><a class="headerlink" href="#Socket.listen" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">listen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">in</span> <span class="pre">address:</span> <span class="pre">ipAddr</span></em>, <em class="sig-param"><span class="pre">reuseAddr:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">true</span></em>, <em class="sig-param"><span class="pre">backlog:</span> <span class="pre">uint(16)</span> <span class="pre">=</span> <span class="pre">BACKLOG_DEFAULT</span></em><span class="sig-paren">)</span><span class="pre">:</span> <span class="pre">tcpListener</span> <span class="pre">throws</span><a class="headerlink" href="#Socket.listen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience procedure which creates a new <a class="reference internal" href="#Socket.tcpListener" title="Socket.tcpListener"><code class="xref chpl chpl-type docutils literal notranslate"><span class="pre">tcpListener</span></code></a> bound
 to and listening on <cite>address</cite> for new connections. <cite>backlog</cite>
 determines how many connections can be pending (not having called
@@ -530,7 +565,7 @@ value of backlog is <cite>BACKLOG_DEFAULT</cite>.</p>
 
 <dl class="chpl function">
 <dt class="sig sig-object chpl" id="Socket.connect">
-<em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">in</span> <span class="pre">address:</span> <span class="pre">ipAddr</span></em>, <em class="sig-param"><span class="pre">in</span> <span class="pre">timeout</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">timeval(-1</span></em>, <em class="sig-param"><span class="pre">0)</span></em><span class="sig-paren">)</span> <span class="pre">throws</span><a class="headerlink" href="#Socket.connect" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">in</span> <span class="pre">address:</span> <span class="pre">ipAddr</span></em>, <em class="sig-param"><span class="pre">in</span> <span class="pre">timeout</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">timeval(-1</span></em>, <em class="sig-param"><span class="pre">0)</span></em><span class="sig-paren">)</span><span class="pre">:</span> <span class="pre">tcpConn</span> <span class="pre">throws</span><a class="headerlink" href="#Socket.connect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience procedure which creates a <a class="reference internal" href="#Socket.tcpConn" title="Socket.tcpConn"><code class="xref chpl chpl-type docutils literal notranslate"><span class="pre">tcpConn</span></code></a> connected to
 <cite>address</cite>.`timeout` determines how much time to wait for
 connection to be established. The default value for <cite>timeout</cite> is
@@ -585,7 +620,7 @@ to any of the resolved address in given <cite>timeout</cite>.</p>
 
 <dl class="chpl function">
 <dt class="sig sig-object chpl">
-<em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">in</span> <span class="pre">host:</span> <span class="pre">string</span></em>, <em class="sig-param"><span class="pre">in</span> <span class="pre">port:</span> <span class="pre">uint(16)</span></em>, <em class="sig-param"><span class="pre">family:</span> <span class="pre">IPFamily</span> <span class="pre">=</span> <span class="pre">IPFamily.IPUnspec</span></em>, <em class="sig-param"><span class="pre">in</span> <span class="pre">timeout</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">timeval(-1</span></em>, <em class="sig-param"><span class="pre">0)</span></em><span class="sig-paren">)</span> <span class="pre">throws</span></dt>
+<em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">in</span> <span class="pre">host:</span> <span class="pre">string</span></em>, <em class="sig-param"><span class="pre">in</span> <span class="pre">port:</span> <span class="pre">uint(16)</span></em>, <em class="sig-param"><span class="pre">family:</span> <span class="pre">IPFamily</span> <span class="pre">=</span> <span class="pre">IPFamily.IPUnspec</span></em>, <em class="sig-param"><span class="pre">in</span> <span class="pre">timeout</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">timeval(-1</span></em>, <em class="sig-param"><span class="pre">0)</span></em><span class="sig-paren">)</span><span class="pre">:</span> <span class="pre">tcpConn</span> <span class="pre">throws</span></dt>
 <dd><p>This overload of <cite>connect</cite> not only returns a <a class="reference internal" href="#Socket.tcpConn" title="Socket.tcpConn"><code class="xref chpl chpl-type docutils literal notranslate"><span class="pre">tcpConn</span></code></a>
 but also does DNS resolution for the provided <cite>host</cite>.
 The <cite>timeout</cite> is tired for all resolved addresses and the first
@@ -625,14 +660,16 @@ bound to any available port.</p>
 <dl class="chpl method">
 <dt class="sig sig-object chpl" id="Socket.udpSocket.init">
 <em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">family:</span> <span class="pre">IPFamily</span> <span class="pre">=</span> <span class="pre">IPFamily.IPv4</span></em><span class="sig-paren">)</span><a class="headerlink" href="#Socket.udpSocket.init" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Create a UDP socket of provided Family.</p>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="chpl method">
 <dt class="sig sig-object chpl" id="Socket.udpSocket.addr">
 <em class="property"><span class="pre">proc</span> </em><span class="sig-prename descclassname"><span class="pre">udpSocket.</span></span><span class="sig-name descname"><span class="pre">addr</span></span><a class="headerlink" href="#Socket.udpSocket.addr" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Get <a class="reference internal" href="#Socket.ipAddr" title="Socket.ipAddr"><code class="xref chpl chpl-type docutils literal notranslate"><span class="pre">ipAddr</span></code></a> associated with udp socket</p>
+</dd></dl>
 
 <dl class="chpl method">
 <dt class="sig sig-object chpl" id="Socket.udpSocket.recvfrom">
@@ -825,8 +862,8 @@ and socket.</p>
 </dd></dl>
 
 <dl class="chpl function">
-<dt class="sig sig-object chpl" id="Socket.getSocketOpt">
-<em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">getSocketOpt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">ref</span> <span class="pre">socket:</span> <span class="pre">tcpConn</span></em>, <em class="sig-param"><span class="pre">level:</span> <span class="pre">c_int</span></em>, <em class="sig-param"><span class="pre">optname:</span> <span class="pre">c_int</span></em><span class="sig-paren">)</span><span class="pre">:</span> <span class="pre">int(32)</span> <span class="pre">throws</span><a class="headerlink" href="#Socket.getSocketOpt" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object chpl" id="Socket.getSockOpt">
+<em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">getSockOpt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">ref</span> <span class="pre">socket:</span> <span class="pre">tcpConn</span></em>, <em class="sig-param"><span class="pre">level:</span> <span class="pre">c_int</span></em>, <em class="sig-param"><span class="pre">optname:</span> <span class="pre">c_int</span></em><span class="sig-paren">)</span><span class="pre">:</span> <span class="pre">int(32)</span> <span class="pre">throws</span><a class="headerlink" href="#Socket.getSockOpt" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the value of the given socket option (see <a class="reference external" href="/https://pubs.opengroup.org/onlinepubs/9699919799/functions/getsockopt.html">getsockopt</a>)
 on provided <a class="reference internal" href="#Socket.tcpConn" title="Socket.tcpConn"><code class="xref chpl chpl-type docutils literal notranslate"><span class="pre">tcpConn</span></code></a>. The needed symbolic constants (SO_* etc.)
 are defined in <a class="reference internal" href="Sys.html#module-Sys" title="Sys: Support for low-level programming and system calls."><code class="xref chpl chpl-mod docutils literal notranslate"><span class="pre">Sys</span></code></a> module.</p>
@@ -853,19 +890,19 @@ and socket.</p>
 
 <dl class="chpl function">
 <dt class="sig sig-object chpl">
-<em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">getSocketOpt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">ref</span> <span class="pre">socket:</span> <span class="pre">tcpListener</span></em>, <em class="sig-param"><span class="pre">level:</span> <span class="pre">c_int</span></em>, <em class="sig-param"><span class="pre">optname:</span> <span class="pre">c_int</span></em><span class="sig-paren">)</span><span class="pre">:</span> <span class="pre">int(32)</span> <span class="pre">throws</span></dt>
+<em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">getSockOpt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">ref</span> <span class="pre">socket:</span> <span class="pre">tcpListener</span></em>, <em class="sig-param"><span class="pre">level:</span> <span class="pre">c_int</span></em>, <em class="sig-param"><span class="pre">optname:</span> <span class="pre">c_int</span></em><span class="sig-paren">)</span><span class="pre">:</span> <span class="pre">int(32)</span> <span class="pre">throws</span></dt>
 <dd><p>See above</p>
 </dd></dl>
 
 <dl class="chpl function">
 <dt class="sig sig-object chpl">
-<em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">getSocketOpt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">ref</span> <span class="pre">socket:</span> <span class="pre">udpSocket</span></em>, <em class="sig-param"><span class="pre">level:</span> <span class="pre">c_int</span></em>, <em class="sig-param"><span class="pre">optname:</span> <span class="pre">c_int</span></em><span class="sig-paren">)</span><span class="pre">:</span> <span class="pre">int(32)</span> <span class="pre">throws</span></dt>
+<em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">getSockOpt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">ref</span> <span class="pre">socket:</span> <span class="pre">udpSocket</span></em>, <em class="sig-param"><span class="pre">level:</span> <span class="pre">c_int</span></em>, <em class="sig-param"><span class="pre">optname:</span> <span class="pre">c_int</span></em><span class="sig-paren">)</span><span class="pre">:</span> <span class="pre">int(32)</span> <span class="pre">throws</span></dt>
 <dd><p>See above</p>
 </dd></dl>
 
 <dl class="chpl function">
 <dt class="sig sig-object chpl">
-<em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">getSocketOpt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">ref</span> <span class="pre">socket:</span> <span class="pre">tcpConn</span></em>, <em class="sig-param"><span class="pre">level:</span> <span class="pre">c_int</span></em>, <em class="sig-param"><span class="pre">optname:</span> <span class="pre">c_int</span></em>, <em class="sig-param"><span class="pre">buflen</span> <span class="pre">=</span> <span class="pre">0</span></em><span class="sig-paren">)</span><span class="pre">:</span> <span class="pre">bytes</span> <span class="pre">throws</span></dt>
+<em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">getSockOpt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">ref</span> <span class="pre">socket:</span> <span class="pre">tcpConn</span></em>, <em class="sig-param"><span class="pre">level:</span> <span class="pre">c_int</span></em>, <em class="sig-param"><span class="pre">optname:</span> <span class="pre">c_int</span></em>, <em class="sig-param"><span class="pre">buflen:</span> <span class="pre">uint(16)</span></em><span class="sig-paren">)</span><span class="pre">:</span> <span class="pre">bytes</span> <span class="pre">throws</span></dt>
 <dd><p>Returns the value of the given socket option which is expected to be of type
 <a class="reference internal" href="../../builtins/Bytes.html#module-Bytes" title="Bytes: The following document shows functions and methods used to manipulate and"><code class="xref chpl chpl-mod docutils literal notranslate"><span class="pre">bytes</span></code></a> on provided <a class="reference internal" href="#Socket.tcpConn" title="Socket.tcpConn"><code class="xref chpl chpl-type docutils literal notranslate"><span class="pre">tcpConn</span></code></a>. The needed symbolic constants (SO_* etc.)
 are defined in <a class="reference internal" href="Sys.html#module-Sys" title="Sys: Support for low-level programming and system calls."><code class="xref chpl chpl-mod docutils literal notranslate"><span class="pre">Sys</span></code></a> module.</p>
@@ -892,13 +929,13 @@ and socket.</p>
 
 <dl class="chpl function">
 <dt class="sig sig-object chpl">
-<em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">getSocketOpt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">ref</span> <span class="pre">socket:</span> <span class="pre">tcpListener</span></em>, <em class="sig-param"><span class="pre">level:</span> <span class="pre">c_int</span></em>, <em class="sig-param"><span class="pre">optname:</span> <span class="pre">c_int</span></em>, <em class="sig-param"><span class="pre">buflen</span> <span class="pre">=</span> <span class="pre">0</span></em><span class="sig-paren">)</span><span class="pre">:</span> <span class="pre">bytes</span> <span class="pre">throws</span></dt>
+<em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">getSockOpt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">ref</span> <span class="pre">socket:</span> <span class="pre">tcpListener</span></em>, <em class="sig-param"><span class="pre">level:</span> <span class="pre">c_int</span></em>, <em class="sig-param"><span class="pre">optname:</span> <span class="pre">c_int</span></em>, <em class="sig-param"><span class="pre">buflen:</span> <span class="pre">uint(16)</span></em><span class="sig-paren">)</span><span class="pre">:</span> <span class="pre">bytes</span> <span class="pre">throws</span></dt>
 <dd><p>See Above</p>
 </dd></dl>
 
 <dl class="chpl function">
 <dt class="sig sig-object chpl">
-<em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">getSocketOpt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">ref</span> <span class="pre">socket:</span> <span class="pre">udpSocket</span></em>, <em class="sig-param"><span class="pre">level:</span> <span class="pre">c_int</span></em>, <em class="sig-param"><span class="pre">optname:</span> <span class="pre">c_int</span></em>, <em class="sig-param"><span class="pre">buflen</span> <span class="pre">=</span> <span class="pre">0</span></em><span class="sig-paren">)</span><span class="pre">:</span> <span class="pre">bytes</span> <span class="pre">throws</span></dt>
+<em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">getSockOpt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">ref</span> <span class="pre">socket:</span> <span class="pre">udpSocket</span></em>, <em class="sig-param"><span class="pre">level:</span> <span class="pre">c_int</span></em>, <em class="sig-param"><span class="pre">optname:</span> <span class="pre">c_int</span></em>, <em class="sig-param"><span class="pre">buflen</span></em><span class="sig-paren">)</span><span class="pre">:</span> <span class="pre">bytes</span> <span class="pre">throws</span></dt>
 <dd><p>See Above</p>
 </dd></dl>
 
@@ -1018,6 +1055,10 @@ number of a remote IPv4/v6 socket, for instance.</p>
            
           </div>
           <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="Reflection.html" class="btn btn-neutral float-right" title="Reflection" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Path.html" class="btn btn-neutral float-left" title="Path" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
 
   <hr/>
 
