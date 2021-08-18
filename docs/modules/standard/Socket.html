@@ -482,6 +482,9 @@ bound and listening for connections.</p>
 <dd><p>Waits for a new connection based on <cite>timeout</cite> and
 returns a new <a class="reference internal" href="#Socket.tcpConn" title="Socket.tcpConn"><code class="xref chpl chpl-type docutils literal notranslate"><span class="pre">tcpConn</span></code></a> if successful. Default
 time to wait for a new connection is indefinite.</p>
+<div class="highlight-Chapel notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="nx">server</span><span class="p">.</span><span class="nx">accept</span><span class="p">()</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Arguments</dt>
 <dd class="field-odd"><p><strong>timeout</strong> – time to wait for new connection.</p>
@@ -538,12 +541,16 @@ listening on and bound to.</p>
 
 <dl class="chpl function">
 <dt class="sig sig-object chpl" id="Socket.listen">
-<em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">listen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">in</span> <span class="pre">address:</span> <span class="pre">ipAddr</span></em>, <em class="sig-param"><span class="pre">reuseAddr:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">true</span></em>, <em class="sig-param"><span class="pre">backlog:</span> <span class="pre">uint(16)</span> <span class="pre">=</span> <span class="pre">BACKLOG_DEFAULT</span></em><span class="sig-paren">)</span><span class="pre">:</span> <span class="pre">tcpListener</span> <span class="pre">throws</span><a class="headerlink" href="#Socket.listen" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">listen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">ref</span> <span class="pre">address:</span> <span class="pre">ipAddr</span></em>, <em class="sig-param"><span class="pre">reuseAddr:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">true</span></em>, <em class="sig-param"><span class="pre">backlog:</span> <span class="pre">uint(16)</span> <span class="pre">=</span> <span class="pre">BACKLOG_DEFAULT</span></em><span class="sig-paren">)</span><span class="pre">:</span> <span class="pre">tcpListener</span> <span class="pre">throws</span><a class="headerlink" href="#Socket.listen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience procedure which creates a new <a class="reference internal" href="#Socket.tcpListener" title="Socket.tcpListener"><code class="xref chpl chpl-type docutils literal notranslate"><span class="pre">tcpListener</span></code></a> bound
 to and listening on <cite>address</cite> for new connections. <cite>backlog</cite>
 determines how many connections can be pending (not having called
 accept) before the socket will begin to reject them. The default
 value of backlog is <cite>BACKLOG_DEFAULT</cite>.</p>
+<div class="highlight-Chapel notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span> <span class="nx">address</span> <span class="o">=</span> <span class="nx">ipAddr</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">8000</span><span class="p">,</span> <span class="nx">IPFamily</span><span class="p">.</span><span class="nx">IPv4</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">listen</span><span class="p">(</span><span class="nx">address</span><span class="p">);</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Arguments</dt>
 <dd class="field-odd"><ul class="simple">
@@ -565,11 +572,16 @@ value of backlog is <cite>BACKLOG_DEFAULT</cite>.</p>
 
 <dl class="chpl function">
 <dt class="sig sig-object chpl" id="Socket.connect">
-<em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">in</span> <span class="pre">address:</span> <span class="pre">ipAddr</span></em>, <em class="sig-param"><span class="pre">in</span> <span class="pre">timeout</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">timeval(-1</span></em>, <em class="sig-param"><span class="pre">0)</span></em><span class="sig-paren">)</span><span class="pre">:</span> <span class="pre">tcpConn</span> <span class="pre">throws</span><a class="headerlink" href="#Socket.connect" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">ref</span> <span class="pre">address:</span> <span class="pre">ipAddr</span></em>, <em class="sig-param"><span class="pre">in</span> <span class="pre">timeout</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">timeval(-1</span></em>, <em class="sig-param"><span class="pre">0)</span></em><span class="sig-paren">)</span><span class="pre">:</span> <span class="pre">tcpConn</span> <span class="pre">throws</span><a class="headerlink" href="#Socket.connect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience procedure which creates a <a class="reference internal" href="#Socket.tcpConn" title="Socket.tcpConn"><code class="xref chpl chpl-type docutils literal notranslate"><span class="pre">tcpConn</span></code></a> connected to
 <cite>address</cite>.`timeout` determines how much time to wait for
 connection to be established. The default value for <cite>timeout</cite> is
 indefinite.</p>
+<div class="highlight-Chapel notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span> <span class="nx">address</span> <span class="o">=</span> <span class="nx">ipAddr</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">8000</span><span class="p">,</span> <span class="nx">IPFamily</span><span class="p">.</span><span class="nx">IPv4</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">timeout</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">timeval</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">connectedClient</span> <span class="o">=</span> <span class="nx">connect</span><span class="p">(</span><span class="nx">address</span><span class="p">,</span> <span class="nx">timeout</span><span class="p">);</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Arguments</dt>
 <dd class="field-odd"><ul class="simple">
@@ -596,6 +608,10 @@ indefinite.</p>
 but also does DNS resolution for the provided <cite>host</cite>.
 The <cite>timeout</cite> is tired for all resolved addresses and the first
 successful one is returned back.</p>
+<div class="highlight-Chapel notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span> <span class="nx">timeout</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">timeval</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">connectedClient</span> <span class="o">=</span> <span class="nx">connect</span><span class="p">(</span><span class="s">&quot;google.com&quot;</span><span class="p">,</span> <span class="s">&quot;tcp&quot;</span><span class="p">,</span> <span class="nx">IPFamily</span><span class="p">.</span><span class="nx">IPv4</span><span class="p">,</span> <span class="nx">timeout</span><span class="p">);</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Arguments</dt>
 <dd class="field-odd"><ul class="simple">
@@ -625,6 +641,10 @@ to any of the resolved address in given <cite>timeout</cite>.</p>
 but also does DNS resolution for the provided <cite>host</cite>.
 The <cite>timeout</cite> is tired for all resolved addresses and the first
 successful one is returned back.</p>
+<div class="highlight-Chapel notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span> <span class="nx">timeout</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">timeval</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">connectedClient</span> <span class="o">=</span> <span class="nx">connect</span><span class="p">(</span><span class="s">&quot;google.com&quot;</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="nx">IPFamily</span><span class="p">.</span><span class="nx">IPv4</span><span class="p">,</span> <span class="nx">timeout</span><span class="p">);</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Arguments</dt>
 <dd class="field-odd"><ul class="simple">
@@ -677,6 +697,11 @@ bound to any available port.</p>
 <dd><p>Reads incoming <cite>bufferLen</cite> number of bytes on socket, and
 return a tuple of (data, address), where address will be a
 <a class="reference internal" href="#Socket.ipAddr" title="Socket.ipAddr"><code class="xref chpl chpl-type docutils literal notranslate"><span class="pre">ipAddr</span></code></a> pointing to address of the socket from where data was received.</p>
+<div class="highlight-Chapel notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span> <span class="nx">timeout</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">timeval</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">socket</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">udpSocket</span><span class="p">();</span>
+<span class="kd">const</span> <span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">sender</span><span class="p">)</span> <span class="o">=</span> <span class="nx">socket</span><span class="p">.</span><span class="nx">recvFrom</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="nx">timeout</span><span class="p">);</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Arguments</dt>
 <dd class="field-odd"><ul class="simple">
@@ -703,6 +728,11 @@ within given <cite>timeout</cite>.</p>
 <dd><p>Reads incoming <cite>bufferLen</cite> number of bytes on socket, and
 return a tuple of read bytes, which can have size smaller than asked and if
 the size is more they will be truncated.</p>
+<div class="highlight-Chapel notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span> <span class="nx">timeout</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">timeval</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">socket</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">udpSocket</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">socket</span><span class="p">.</span><span class="nx">recv</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="nx">timeout</span><span class="p">);</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Arguments</dt>
 <dd class="field-odd"><ul class="simple">
@@ -728,6 +758,11 @@ within given <cite>timeout</cite>.</p>
 <em class="property"><span class="pre">proc</span> </em><span class="sig-prename descclassname"><span class="pre">udpSocket.</span></span><span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">data:</span> <span class="pre">bytes</span></em>, <em class="sig-param"><span class="pre">in</span> <span class="pre">address:</span> <span class="pre">ipAddr</span></em>, <em class="sig-param"><span class="pre">in</span> <span class="pre">timeout</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">timeval(-1</span></em>, <em class="sig-param"><span class="pre">0)</span></em><span class="sig-paren">)</span> <span class="pre">throws</span><a class="headerlink" href="#Socket.udpSocket.send" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send <cite>data</cite> over socket to the provided address and
 return number of bytes sent if successful.</p>
+<div class="highlight-Chapel notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span> <span class="nx">timeout</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">timeval</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">socket</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">udpSocket</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">sentBytes</span> <span class="o">=</span> <span class="nx">socket</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s">&quot;hello world!&quot;</span><span class="p">:</span><span class="kt">bytes</span><span class="p">,</span> <span class="nx">timeout</span><span class="p">);</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Arguments</dt>
 <dd class="field-odd"><ul class="simple">
@@ -737,10 +772,10 @@ return number of bytes sent if successful.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>data</p>
+<dd class="field-even"><p>sentBytes</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="../../builtins/Bytes.html#module-Bytes" title="Bytes: The following document shows functions and methods used to manipulate and"><code class="xref chpl chpl-mod docutils literal notranslate"><span class="pre">bytes</span></code></a></p>
+<dd class="field-odd"><p><cite>ssize_t</cite></p>
 </dd>
 <dt class="field-even">Throws</dt>
 <dd class="field-even"><p><strong>SystemError</strong> – Upon failure to send any data
@@ -765,6 +800,9 @@ within given <cite>timeout</cite>.</p>
 <dd><p>Set the value of the given socket option (see <a class="reference external" href="/https://pubs.opengroup.org/onlinepubs/9699919799/functions/setsockopt.html#">setsockopt(2)</a>)
 on provided <a class="reference internal" href="#Socket.tcpConn" title="Socket.tcpConn"><code class="xref chpl chpl-type docutils literal notranslate"><span class="pre">tcpConn</span></code></a>. The needed symbolic constants (SO_* etc.)
 are defined in the <a class="reference internal" href="Sys.html#module-Sys" title="Sys: Support for low-level programming and system calls."><code class="xref chpl chpl-mod docutils literal notranslate"><span class="pre">Sys</span></code></a>.</p>
+<div class="highlight-Chapel notranslate"><div class="highlight"><pre><span></span><span class="nx">setSockOpt</span><span class="p">(</span><span class="nx">socket</span><span class="p">,</span> <span class="nx">IPPROTO_TCP</span><span class="p">,</span> <span class="nx">TCP_QUICKACK</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="nx">c_int</span><span class="p">);</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Arguments</dt>
 <dd class="field-odd"><ul class="simple">
@@ -996,7 +1034,13 @@ number of a remote IPv4/v6 socket, for instance.</p>
 <dl class="chpl function">
 <dt class="sig sig-object chpl" id="Socket.bind">
 <em class="property"><span class="pre">proc</span> </em><span class="sig-name descname"><span class="pre">bind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">ref</span> <span class="pre">socket:</span> <span class="pre">udpSocket</span></em>, <em class="sig-param"><span class="pre">ref</span> <span class="pre">address:</span> <span class="pre">ipAddr</span></em>, <em class="sig-param"><span class="pre">reuseAddr</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="sig-paren">)</span> <span class="pre">throws</span><a class="headerlink" href="#Socket.bind" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bind the socket to address. The socket must not already be bound.</p>
+<dd><p>Bind the socket to address. The socket must not already
+be bound to any address prior to calling this procedure.</p>
+<div class="highlight-Chapel notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span>  <span class="k">new</span> <span class="nx">udpSocket</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">address</span> <span class="o">=</span> <span class="nx">ipAddr</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">8111</span><span class="p">);</span>
+<span class="nx">bind</span><span class="p">(</span><span class="nx">socket</span><span class="p">,</span> <span class="nx">address</span><span class="p">);</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Arguments</dt>
 <dd class="field-odd"><ul class="simple">
