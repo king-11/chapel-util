@@ -27,6 +27,8 @@ struct event_base *base;
 
 int n = 0;
 
+event_base_got_break(base);
+
 void
 on_accept(evutil_socket_t listener, short event, void *arg)
 {
@@ -50,12 +52,12 @@ on_accept(evutil_socket_t listener, short event, void *arg)
 }
 
 
-void* createBase() {
+void* dispatchLoop() {
      if (!base){
 	perror("base not created");
      }
      else {
-     	event_base_dispatch(base);
+     	event_base_loop(base, EVLOOP_NO_EXIT_ON_EMPTY);
      	event_base_free(base);
      }
 
@@ -72,7 +74,7 @@ main(int argc, char **argv)
      pthread_t tid;
      pthread_attr_t attr;
      pthread_attr_init(&attr);
-     pthread_create(&tid, &attr, createBase, NULL);
+     pthread_create(&tid, &attr, dispatchLoop, NULL);
 
      // Part 2
      // stays same as earlier implementation
@@ -100,9 +102,10 @@ main(int argc, char **argv)
      event_add(listener_event, NULL);
 
      // add waiting logic using qthreads here
-     // wake up by createBase thread
+     // wake up by dispatchLoop thread
      // how will the wake up work in case of multiple event observers
 
      pthread_join(tid, NULL);
+     event_del(listener_event);
      return 0;
 }
