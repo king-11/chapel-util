@@ -6,11 +6,7 @@ proc main() throws {
   var receiver = new udpSocket();
   bind(receiver, address);
 
-  var address1 = ipAddr.ipv4(IPv4Localhost, 8110);
   var sender = new udpSocket();
-  bind(sender, address1);
-  writeln(receiver);
-  writeln(sender);
 
   var sent = b"hello";
   writeln(sent);
