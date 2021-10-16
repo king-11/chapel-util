@@ -1,6 +1,5 @@
 use Socket;
 
-// not working
 var port:uint(16) = 8812;
 var host = "0.0.0.0";
 var address = ipAddr.ipv4(IPv4Localhost, port);
@@ -10,7 +9,7 @@ proc server(srv: tcpListener) throws {
   var conn = srv.accept();
   writeln("Client connected. Now sending ", 5);
   var writer = conn.writer();
-  writer.write(5);
+  writer.write(5, " ");
   writeln("Server done sending");
 }
 
